@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: ReferenceImageLibrary
+  m_EditorClassIdentifier: 
+  m_GuidLow: 5007218340122364302
+  m_GuidHigh: 16635470583244765630
+  m_DataStore:
+    m_Storage: []
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 5480442190348712993
+      m_GuidHigh: 13350005381322530446
+    m_SerializedTextureGuid:
+      m_GuidLow: 15709739332299210269
+      m_GuidHigh: 13906664309581577352
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: first-aid-icon
+    m_Texture: {fileID: 2800000, guid: 5fad3e1d34b0da04887c36478265fec0, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 5105583230656748080
+      m_GuidHigh: 6617486851800798092
+    m_SerializedTextureGuid:
+      m_GuidLow: 609358772474669598
+      m_GuidHigh: 6087953594768852216
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: start-button
+    m_Texture: {fileID: 2800000, guid: 361eea1ee0930874f88442018ac17c54, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 5108463435025091932
+      m_GuidHigh: 2663100900929957548
+    m_SerializedTextureGuid:
+      m_GuidLow: 0
+      m_GuidHigh: 0
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: 
+    m_Texture: {fileID: 0}
