@@ -21,29 +21,19 @@ MonoBehaviour:
       m_GuidLow: 5480442190348712993
       m_GuidHigh: 13350005381322530446
     m_SerializedTextureGuid:
-      m_GuidLow: 15709739332299210269
-      m_GuidHigh: 13906664309581577352
+      m_GuidLow: 9215651750833756207
+      m_GuidHigh: 15152887850737616409
     m_Size: {x: 0, y: 0}
     m_SpecifySize: 0
     m_Name: first-aid-icon
-    m_Texture: {fileID: 2800000, guid: 5fad3e1d34b0da04887c36478265fec0, type: 3}
+    m_Texture: {fileID: 2800000, guid: d627182f92707fe419468c8037df49d2, type: 3}
   - m_SerializedGuid:
       m_GuidLow: 5105583230656748080
       m_GuidHigh: 6617486851800798092
     m_SerializedTextureGuid:
-      m_GuidLow: 609358772474669598
-      m_GuidHigh: 6087953594768852216
+      m_GuidLow: 3613084165379454239
+      m_GuidHigh: 3510002137962421737
     m_Size: {x: 0, y: 0}
     m_SpecifySize: 0
     m_Name: start-button
-    m_Texture: {fileID: 2800000, guid: 361eea1ee0930874f88442018ac17c54, type: 3}
-  - m_SerializedGuid:
-      m_GuidLow: 5108463435025091932
-      m_GuidHigh: 2663100900929957548
-    m_SerializedTextureGuid:
-      m_GuidLow: 0
-      m_GuidHigh: 0
-    m_Size: {x: 0, y: 0}
-    m_SpecifySize: 0
-    m_Name: 
-    m_Texture: {fileID: 0}
+    m_Texture: {fileID: 2800000, guid: cd07f51f40e73224e99d1c025908b630, type: 3}
