@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class FirstAid : MonoBehaviour
 {
-    private float moveSpeed = 1f; // Adjust the speed of the convulsions as needed
-    private float moveIntensity = 1f; // Adjust the intensity of the convulsions as needed
-
     private bool isConvulsing = false;
     private RuntimePlatform platform;
 
     private GameObject startButton;
     private GameObject patient;
+
+    private Vector3 originalPatientPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +18,10 @@ public class FirstAid : MonoBehaviour
         this.platform = Application.platform;
         this.startButton = GameObject.FindWithTag("StartButton");
         this.patient = GameObject.FindWithTag("Patient");
+        if (this.patient != null)
+        {
+            this.originalPatientPosition = this.patient.transform.position;
+        }
     }
 
     // Update is called once per frame
@@ -76,20 +79,13 @@ public class FirstAid : MonoBehaviour
                 if (isConvulsing)
                 {
                     ToggleConvulsions();
+
+                    if (this.patient != null && this.originalPatientPosition != null)
+                    {
+                        this.patient.transform.position = this.originalPatientPosition;
+                    }
                 }
                 Debug.Log("Medication was clicked. Patient stopped having convulsions.");
-            }
-            else if (hitinfo.collider.tag == "Patient")
-            {
-                if (isConvulsing)
-                {
-                    // Schlechte Vitalparameter einblenden
-                }
-                else
-                {
-                    // Gute Vitalparameter einblenden
-                }
-                Debug.Log("Patient was clicked.");
             }
             else
             {
@@ -108,13 +104,17 @@ public class FirstAid : MonoBehaviour
         if (this.patient != null)
         {
             Vector3 originalPosition = this.patient.transform.position;
-            Vector3 randomTranslation = Random.insideUnitSphere * moveIntensity;
-            Vector3 newPosition = originalPosition + randomTranslation;
 
-            // Move the GameObject smoothly towards the new position
-            this.patient.transform.position = Vector3.Lerp(transform.position, newPosition, moveSpeed * Time.deltaTime);
+            // Apply small random translation to the x-coordinate of the GameObject's position
+            float randomX = Random.Range(-0.25f, +0.25f);
+            float randomY = Random.Range(-0.1f, +0.1f);
+            float newX = originalPosition.x + randomX;
+            float newY = originalPosition.y + randomY;
 
-            Debug.Log($"Moving from {originalPosition} to {this.patient.transform.position}");
+            // Move the GameObject smoothly towards the new x-coordinate
+            Vector3 newPosition = new Vector3(newX, newY, this.patient.transform.position.z);
+            this.patient.transform.position = Vector3.Lerp(this.patient.transform.position, newPosition, 3.0f * Time.deltaTime);
+
             Debug.Log("Patient is having convulsions!");
         }
     }

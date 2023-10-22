@@ -828,7 +828,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7c9fbac44cb3f48a922eaa2baab104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patient: {fileID: 39604857900331393, guid: 0368af6ae2a4a3b4db27eeb52422f08d, type: 3}
+  moveSpeed: 0.5
+  moveIntensity: 0.5
 --- !u!1 &8409789469992689534
 GameObject:
   m_ObjectHideFlags: 0
