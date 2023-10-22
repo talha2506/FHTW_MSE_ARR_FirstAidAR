@@ -4,22 +4,21 @@ using UnityEngine;
 
 public class FirstAid : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject patient;
-
     private float moveSpeed = 1f; // Adjust the speed of the convulsions as needed
     private float moveIntensity = 1f; // Adjust the intensity of the convulsions as needed
 
     private bool isConvulsing = false;
     private RuntimePlatform platform;
 
-    private Vector3 originalPosition;
+    private GameObject startButton;
+    private GameObject patient;
 
     // Start is called before the first frame update
     void Start()
     {
         this.platform = Application.platform;
-        this.originalPosition = patient.transform.position;
+        this.startButton = GameObject.FindWithTag("StartButton");
+        this.patient = GameObject.FindWithTag("Patient");
     }
 
     // Update is called once per frame
@@ -51,6 +50,11 @@ public class FirstAid : MonoBehaviour
         {
             StartConvulsions();
         }
+
+        if (this.startButton != null)
+        {
+            this.startButton.SetActive(!isConvulsing);
+        }
     }
 
     private void CheckTouch(Vector3 pos)
@@ -61,17 +65,30 @@ public class FirstAid : MonoBehaviour
         {
             if (hitinfo.collider.tag == "StartButton")
             {
-                ToggleConvulsions();
+                if (!isConvulsing)
+                {
+                    ToggleConvulsions();
+                }
                 Debug.Log("Scenario started.");
             }
             else if (hitinfo.collider.tag == "Benzo")
             {
-                // Do something
-                Debug.Log("Medication was clicked.");
+                if (isConvulsing)
+                {
+                    ToggleConvulsions();
+                }
+                Debug.Log("Medication was clicked. Patient stopped having convulsions.");
             }
             else if (hitinfo.collider.tag == "Patient")
             {
-                // Do something
+                if (isConvulsing)
+                {
+                    // Schlechte Vitalparameter einblenden
+                }
+                else
+                {
+                    // Gute Vitalparameter einblenden
+                }
                 Debug.Log("Patient was clicked.");
             }
             else
@@ -88,10 +105,17 @@ public class FirstAid : MonoBehaviour
 
     private void StartConvulsions()
     {
-        float x = patient.transform.position.x * Mathf.Sin(Time.time * moveSpeed) * moveIntensity;
-        float y = patient.transform.position.y;
-        float z = patient.transform.position.z;
-        patient.transform.position = new Vector3(x, y, z);
-        Debug.Log("Patient is having convulsions!");
+        if (this.patient != null)
+        {
+            Vector3 originalPosition = this.patient.transform.position;
+            Vector3 randomTranslation = Random.insideUnitSphere * moveIntensity;
+            Vector3 newPosition = originalPosition + randomTranslation;
+
+            // Move the GameObject smoothly towards the new position
+            this.patient.transform.position = Vector3.Lerp(transform.position, newPosition, moveSpeed * Time.deltaTime);
+
+            Debug.Log($"Moving from {originalPosition} to {this.patient.transform.position}");
+            Debug.Log("Patient is having convulsions!");
+        }
     }
 }

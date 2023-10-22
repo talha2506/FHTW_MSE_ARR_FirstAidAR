@@ -23,9 +23,9 @@ MonoBehaviour:
     m_SerializedTextureGuid:
       m_GuidLow: 9215651750833756207
       m_GuidHigh: 15152887850737616409
-    m_Size: {x: 0, y: 0}
-    m_SpecifySize: 0
-    m_Name: first-aid-icon
+    m_Size: {x: 0.1, y: 0.06666667}
+    m_SpecifySize: 1
+    m_Name: first-aid
     m_Texture: {fileID: 2800000, guid: d627182f92707fe419468c8037df49d2, type: 3}
   - m_SerializedGuid:
       m_GuidLow: 5105583230656748080
@@ -33,7 +33,17 @@ MonoBehaviour:
     m_SerializedTextureGuid:
       m_GuidLow: 3613084165379454239
       m_GuidHigh: 3510002137962421737
-    m_Size: {x: 0, y: 0}
-    m_SpecifySize: 0
-    m_Name: start-button
+    m_Size: {x: 0.1, y: 0.1}
+    m_SpecifySize: 1
+    m_Name: start
     m_Texture: {fileID: 2800000, guid: cd07f51f40e73224e99d1c025908b630, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 5447735074386039950
+      m_GuidHigh: 7536250830153456783
+    m_SerializedTextureGuid:
+      m_GuidLow: 1762288760015161234
+      m_GuidHigh: 9203416182823855545
+    m_Size: {x: 0.1, y: 0.100635596}
+    m_SpecifySize: 1
+    m_Name: BedMarker
+    m_Texture: {fileID: 2800000, guid: 4c5e0792e84a1874b9254ca9411ab97f, type: 3}
