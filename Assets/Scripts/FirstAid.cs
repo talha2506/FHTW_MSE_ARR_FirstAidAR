@@ -9,7 +9,9 @@ public class FirstAid : MonoBehaviour
     private GameObject bed;
     private GameObject patient;
 
-    private Vector3 originalPatientPosition;
+    private AudioSource audioSource = null;
+    [SerializeField]
+    private AudioClip clip = null;
 
     // Start is called before the first frame update
     void Start()
@@ -18,9 +20,14 @@ public class FirstAid : MonoBehaviour
         this.startButton = GameObject.FindWithTag("StartButton");
         this.bed = GameObject.FindWithTag("Bed");
         this.patient = this.gameObject;
-        if (this.bed != null)
+        this.audioSource = FindFirstObjectByType<AudioSource>();
+        if (this.audioSource == null)
         {
-            this.originalPatientPosition = this.patient.transform.position;
+            Debug.LogWarning("Audio source is null!");
+        }
+        else
+        {
+            this.audioSource.clip = this.clip;
         }
     }
 
@@ -84,6 +91,11 @@ public class FirstAid : MonoBehaviour
                     {
                         this.patient.transform.position = new Vector3(this.bed.transform.position.x, this.bed.transform.position.y + 0.4f, this.bed.transform.position.z - 0.4f);
                     }
+
+                    if (this.audioSource != null)
+                    {
+                        this.audioSource.Stop();
+                    }
                 }
                 Debug.Log("Medication was clicked. Patient stopped having convulsions.");
             }
@@ -103,6 +115,11 @@ public class FirstAid : MonoBehaviour
     {
         if (this.patient != null)
         {
+            if (this.audioSource != null && !this.audioSource.isPlaying)
+            {
+                this.audioSource.Play();
+            }
+
             Vector3 originalPosition = this.patient.transform.position;
 
             // Apply small random translation to the x-coordinate of the GameObject's position
