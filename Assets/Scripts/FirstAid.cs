@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FirstAid : MonoBehaviour
@@ -8,6 +6,7 @@ public class FirstAid : MonoBehaviour
     private RuntimePlatform platform;
 
     private GameObject startButton;
+    private GameObject bed;
     private GameObject patient;
 
     private Vector3 originalPatientPosition;
@@ -17,8 +16,9 @@ public class FirstAid : MonoBehaviour
     {
         this.platform = Application.platform;
         this.startButton = GameObject.FindWithTag("StartButton");
-        this.patient = GameObject.FindWithTag("Patient");
-        if (this.patient != null)
+        this.bed = GameObject.FindWithTag("Bed");
+        this.patient = this.gameObject;
+        if (this.bed != null)
         {
             this.originalPatientPosition = this.patient.transform.position;
         }
@@ -80,9 +80,9 @@ public class FirstAid : MonoBehaviour
                 {
                     ToggleConvulsions();
 
-                    if (this.patient != null && this.originalPatientPosition != null)
+                    if (this.bed != null)
                     {
-                        this.patient.transform.position = this.originalPatientPosition;
+                        this.patient.transform.position = new Vector3(this.bed.transform.position.x, this.bed.transform.position.y + 0.4f, this.bed.transform.position.z - 0.4f);
                     }
                 }
                 Debug.Log("Medication was clicked. Patient stopped having convulsions.");
@@ -106,8 +106,8 @@ public class FirstAid : MonoBehaviour
             Vector3 originalPosition = this.patient.transform.position;
 
             // Apply small random translation to the x-coordinate of the GameObject's position
-            float randomX = Random.Range(-0.25f, +0.25f);
-            float randomY = Random.Range(-0.1f, +0.1f);
+            float randomX = Random.Range(-0.05f, +0.05f);
+            float randomY = Random.Range(-0.005f, +0.005f);
             float newX = originalPosition.x + randomX;
             float newY = originalPosition.y + randomY;
 

@@ -488,8 +488,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1189184411}
   - component: {fileID: 1189184410}
-  - component: {fileID: 1189184412}
   - component: {fileID: 1189184413}
+  - component: {fileID: 1189184412}
   m_Layer: 0
   m_Name: XR Origin
   m_TagString: Untagged
@@ -539,13 +539,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1189184409}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dea56a9eaadd1c439095de4f9a371cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 485f168e184563f4fa5be2c2bbf6bab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SerializedLibrary: {fileID: 11400000, guid: 5080eacf26c78924a80f9736214fdad5,
-    type: 2}
-  m_MaxNumberOfMovingImages: 2
-  m_TrackedImagePrefab: {fileID: 0}
+  imagePrefabMappings:
+  - imageName: first-aid
+    prefab: {fileID: 1279140426991430450, guid: 360690a7c06559a4f927c76899139848,
+      type: 3}
+  - imageName: Figure
+    prefab: {fileID: 39604857900331393, guid: 0368af6ae2a4a3b4db27eeb52422f08d, type: 3}
+  - imageName: StartButton
+    prefab: {fileID: 9032585320236783369, guid: d107b3c85fb9e0847aab4e53548b693a,
+      type: 3}
 --- !u!114 &1189184413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -555,13 +560,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1189184409}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 485f168e184563f4fa5be2c2bbf6bab7, type: 3}
+  m_Script: {fileID: 11500000, guid: 4dea56a9eaadd1c439095de4f9a371cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placeablePrefabs:
-  - {fileID: 1279140426991430450, guid: 360690a7c06559a4f927c76899139848, type: 3}
-  - {fileID: 9032585320236783369, guid: d107b3c85fb9e0847aab4e53548b693a, type: 3}
-  - {fileID: 39604857900331393, guid: 0368af6ae2a4a3b4db27eeb52422f08d, type: 3}
+  m_SerializedLibrary: {fileID: 11400000, guid: 5080eacf26c78924a80f9736214fdad5,
+    type: 2}
+  m_MaxNumberOfMovingImages: 3
+  m_TrackedImagePrefab: {fileID: 0}
 --- !u!4 &212175866532230322
 Transform:
   m_ObjectHideFlags: 0

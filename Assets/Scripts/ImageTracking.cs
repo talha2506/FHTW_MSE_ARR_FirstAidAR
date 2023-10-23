@@ -1,28 +1,30 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.XR;
+using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 [RequireComponent(typeof(ARTrackedImageManager))]
 public class ImageTracking : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject[] placeablePrefabs;
+    Dictionary<TrackableId, GameObject> gameobjectDictionary = new();
 
-    private Dictionary<string, GameObject> spawnedPrefabs = new Dictionary<string, GameObject>();
     private ARTrackedImageManager trackedImageManager;
+
+    [SerializeField] private List<ImagePrefabMapping> imagePrefabMappings;
+
+    [Serializable]
+    public class ImagePrefabMapping
+    {
+        public string imageName;
+        public GameObject prefab;
+    }
 
     private void Awake()
     {
         this.trackedImageManager = FindObjectOfType<ARTrackedImageManager>();
-
-        foreach(GameObject prefab in this.placeablePrefabs)
-        {
-            GameObject newPrefab = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-            newPrefab.name = prefab.name;
-            spawnedPrefabs.Add(prefab.name, newPrefab);
-        }
     }
 
     private void OnEnable()
@@ -37,38 +39,48 @@ public class ImageTracking : MonoBehaviour
 
     private void ImageChanged(ARTrackedImagesChangedEventArgs eventArgs)
     {
-        foreach(ARTrackedImage trackedImage in eventArgs.added)
+        foreach (var newImage in eventArgs.added)
         {
-            UpdateImage(trackedImage);
+            int index = 0;
+            foreach (var item in this.trackedImageManager.trackables)
+            {
+                if (item.trackableId == newImage.trackableId)
+                {
+                    GameObject prefabToInstantiate = this.imagePrefabMappings[index].prefab;
+
+                    var go = Instantiate(prefabToInstantiate, trackedImageManager.trackables[newImage.trackableId].transform);
+                    go.transform.position = go.transform.parent.transform.position;
+                    gameobjectDictionary.TryAdd(newImage.trackableId, go);
+                }
+                index++;
+            }
         }
 
-        foreach (ARTrackedImage trackedImage in eventArgs.updated)
+        foreach (var updatedImage in eventArgs.updated)
         {
-            UpdateImage(trackedImage);
+            Debug.Log(updatedImage.ToString());
         }
 
-        foreach (ARTrackedImage trackedImage in eventArgs.removed)
+
+        foreach (var removedImage in eventArgs.removed)
         {
-            spawnedPrefabs[trackedImage.name].SetActive(false);
+            Debug.Log($"Removed image: {removedImage.size}");
+            ListAllImages();
         }
     }
 
-    private void UpdateImage(ARTrackedImage trackedImage)
+    void ListAllImages()
     {
-        if (trackedImage.referenceImage.name == null) return;
-        string name = trackedImage.referenceImage.name;
-        Vector3 position = trackedImage.transform.position;
+        Debug.Log(
+            $"There are {this.trackedImageManager.trackables.count} images being tracked.");
 
-        GameObject prefab = spawnedPrefabs[name];
-        prefab.transform.position = position;
-        prefab.SetActive(true);
-
-        foreach(GameObject go in spawnedPrefabs.Values)
+        foreach (ARTrackedImage trackedImage in this.trackedImageManager.trackables)
         {
-            if (go.name != name)
-            {
-                go.SetActive(false);
-            }
+            Debug.Log($"Image: {trackedImage.referenceImage.name} is at " +
+                      $"{trackedImage.transform.position}" +
+                      $"{trackedImage.transform.localScale}" +
+                      $"{trackedImage.trackableId}"
+                      );
         }
     }
 }
