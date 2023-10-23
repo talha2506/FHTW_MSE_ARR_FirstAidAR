@@ -186,6 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7c9fbac44cb3f48a922eaa2baab104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  benzo: {fileID: 2135003670961981971, guid: b440b67aa3a7d1143b64381e42f615e8, type: 3}
   clip: {fileID: 8300000, guid: 8c917811f23de3743a2c2181470b4a91, type: 3}
 --- !u!4 &3110567700257031172 stripped
 Transform:

@@ -8,6 +8,7 @@ TagManager:
   - Benzo
   - StartButton
   - Bed
+  - ErsteHilfeKoffer
   layers:
   - Default
   - TransparentFX

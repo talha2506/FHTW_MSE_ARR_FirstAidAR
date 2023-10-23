@@ -2,12 +2,20 @@ using UnityEngine;
 
 public class FirstAid : MonoBehaviour
 {
+
     private bool isConvulsing = false;
     private RuntimePlatform platform;
 
     private GameObject startButton;
     private GameObject bed;
     private GameObject patient;
+    private GameObject firstAidKit;
+
+    [SerializeField]
+    private GameObject benzo;
+
+    private GameObject spawnedCapsule;
+    private bool isCapsuleMoving;
 
     private AudioSource audioSource = null;
     [SerializeField]
@@ -20,6 +28,7 @@ public class FirstAid : MonoBehaviour
         this.startButton = GameObject.FindWithTag("StartButton");
         this.bed = GameObject.FindWithTag("Bed");
         this.patient = this.gameObject;
+        this.firstAidKit = GameObject.FindWithTag("ErsteHilfeKoffer");
         this.audioSource = FindFirstObjectByType<AudioSource>();
         if (this.audioSource == null)
         {
@@ -34,7 +43,6 @@ public class FirstAid : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-
         if (platform == RuntimePlatform.Android || platform == RuntimePlatform.IPhonePlayer)
         {
             if (Input.touchCount > 0 && Input.touchCount < 2)
@@ -61,6 +69,29 @@ public class FirstAid : MonoBehaviour
             StartConvulsions();
         }
 
+        if (isCapsuleMoving)
+        {
+            if (Vector3.Distance(spawnedCapsule.transform.position, patient.transform.position) < 0.01f)
+            {
+                isCapsuleMoving = false;
+                ToggleConvulsions();
+                Destroy(spawnedCapsule);
+
+                if (this.bed != null)
+                {
+                    this.patient.transform.position = new Vector3(this.bed.transform.position.x, this.bed.transform.position.y + 0.4f, this.bed.transform.position.z - 0.4f);
+                }
+
+                if (this.audioSource != null)
+                {
+                    this.audioSource.Stop();
+                }
+            } else
+            {
+                spawnedCapsule.transform.position = Vector3.MoveTowards(spawnedCapsule.transform.position, patient.transform.position, 1.0f * Time.deltaTime);
+            }
+        }
+
         if (this.startButton != null)
         {
             this.startButton.SetActive(!isConvulsing);
@@ -81,23 +112,19 @@ public class FirstAid : MonoBehaviour
                 }
                 Debug.Log("Scenario started.");
             }
-            else if (hitinfo.collider.tag == "Benzo")
+            else if (hitinfo.collider.tag == "ErsteHilfeKoffer")
             {
                 if (isConvulsing)
                 {
-                    ToggleConvulsions();
-
-                    if (this.bed != null)
+                    Debug.Log(this.firstAidKit);
+                    Debug.Log(this.benzo);
+                    if (this.firstAidKit != null && this.benzo != null && this.spawnedCapsule == null)
                     {
-                        this.patient.transform.position = new Vector3(this.bed.transform.position.x, this.bed.transform.position.y + 0.4f, this.bed.transform.position.z - 0.4f);
-                    }
+                        SpawnCapsuleAndMoveToPatient();
 
-                    if (this.audioSource != null)
-                    {
-                        this.audioSource.Stop();
+                        Debug.Log("Medication was clicked. Patient should stop having convulsions soon.");
                     }
                 }
-                Debug.Log("Medication was clicked. Patient stopped having convulsions.");
             }
             else
             {
@@ -106,9 +133,16 @@ public class FirstAid : MonoBehaviour
         }
     }
 
+    private void SpawnCapsuleAndMoveToPatient()
+    {
+        spawnedCapsule = Instantiate(benzo, firstAidKit.transform.position + new Vector3(0, 0, 0), Quaternion.identity);
+        isCapsuleMoving = true;
+    }
+
     private void ToggleConvulsions()
     {
         this.isConvulsing = !this.isConvulsing;
+
     }
 
     private void StartConvulsions()
